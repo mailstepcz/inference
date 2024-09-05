@@ -65,6 +65,7 @@ import (
 	"cmp"
 	"context"
 	"fmt"
+	"maps"
 	"sort"
 	"strconv"
 	"strings"
@@ -88,15 +89,15 @@ type EvalContext struct {
 	vars    map[*Var]Value
 }
 
-// func (ctx *EvalContext) clone() *EvalContext {
-// 	return &EvalContext{
-// 		Engine:  ctx.Engine,
-// 		DB:      ctx.DB,
-// 		Context: ctx.Context,
-// 		cut:     ctx.cut,
-// 		vars:    maps.Clone(ctx.vars),
-// 	}
-// }
+func (ctx *EvalContext) clone() *EvalContext {
+	return &EvalContext{
+		Engine:  ctx.Engine,
+		DB:      ctx.DB,
+		Context: ctx.Context,
+		cut:     ctx.cut,
+		vars:    maps.Clone(ctx.vars),
+	}
+}
 
 func listProfile(ctx *EvalContext, l []Value) string {
 	var sb strings.Builder
