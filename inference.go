@@ -24,7 +24,6 @@ type predicate struct {
 // Engine is an inference engine with a set of predicates.
 type Engine struct {
 	rules map[Signature][]func(*EvalContext, []Value) func(func(*EvalContext) bool)
-	slg   map[Signature]bool
 }
 
 // NewContext returns a new eval context for the given engine.
@@ -37,14 +36,6 @@ func (e *Engine) NewContext(ctx context.Context, db interface {
 		DB:      db,
 		Context: ctx,
 	}
-}
-
-// SetSLG marks the given predicate for SLG resolution.
-func (e *Engine) SetSLG(sig Signature) {
-	if e.slg == nil {
-		e.slg = make(map[Signature]bool)
-	}
-	e.slg[sig] = true
 }
 
 // TypeCheck type checks the set of predicates.
@@ -116,49 +107,15 @@ func (e *Engine) Eval(ctx *EvalContext, functor string, args []Value) func(func(
 	if !ok {
 		panic("undefined predicate " + sig.String())
 	}
-	slg := e.slg[sig]
 	return func(yield func(*EvalContext) bool) {
-		var srv *server
-		if slg {
-			srvKey := serverKey{sig: sig, profile: listProfile(ctx, args)}
-			var ok bool
-			srv, ok = ctx.servers[srvKey]
-			if ok {
-				ctx := ctx.clone()
-				srv.subscribe(func(tuple []Value) {
-					ctx := ctx.clone()
-					for ctx := range unifyListsFrom(ctx, args, tuple, 0) {
-						yield(ctx)
-					}
-				})
-				return
-			}
-			if ctx.servers == nil {
-				ctx.servers = make(map[serverKey]*server)
-			}
-			srv = &server{profiles: make(map[string]struct{})}
-			ctx.servers[srvKey] = srv
-		}
 		for _, f := range funcs {
 			if ctx.cut {
 				ctx.cut = false
 				return
 			}
 			for ctx := range f(ctx, args) {
-				if slg {
-					ground, new := srv.produce(ctx, args)
-					if !ground {
-						panic("tuple to be tabled not ground")
-					}
-					if new {
-						if !yield(ctx) {
-							return
-						}
-					}
-				} else {
-					if !yield(ctx) {
-						return
-					}
+				if !yield(ctx) {
+					return
 				}
 			}
 		}
@@ -364,7 +321,7 @@ func NewEngine(code string, typeCheck bool) (*Engine, error) {
 		case *ASTTypeAnnot:
 			typeAnnots[stmt.Selector] = stmt
 		case *ASTSLGDirective:
-			engine.SetSLG(Signature{Functor: stmt.Functor, Arity: stmt.Arity})
+			return nil, errors.ErrUnsupported
 		default:
 			panic("unexpected type of AST")
 		}

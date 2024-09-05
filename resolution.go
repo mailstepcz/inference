@@ -65,7 +65,6 @@ import (
 	"cmp"
 	"context"
 	"fmt"
-	"maps"
 	"sort"
 	"strconv"
 	"strings"
@@ -87,58 +86,17 @@ type EvalContext struct {
 	Context context.Context
 	cut     bool
 	vars    map[*Var]Value
-	servers map[serverKey]*server
 }
 
-func (ctx *EvalContext) clone() *EvalContext {
-	return &EvalContext{
-		Engine:  ctx.Engine,
-		DB:      ctx.DB,
-		Context: ctx.Context,
-		cut:     ctx.cut,
-		vars:    maps.Clone(ctx.vars),
-		servers: ctx.servers,
-	}
-}
-
-type serverKey struct {
-	sig     Signature
-	profile string
-}
-
-type server struct {
-	subscribers []func([]Value)
-	tuples      [][]Value
-	profiles    map[string]struct{}
-}
-
-func (s *server) subscribe(f func([]Value)) {
-	s.subscribers = append(s.subscribers, f)
-	for _, t := range s.tuples {
-		f(t)
-	}
-}
-
-func (s *server) produce(ctx *EvalContext, l []Value) (ground bool, new bool) {
-	t := make([]Value, 0, len(l))
-	for _, x := range l {
-		x, ok := x.TryGround(ctx)
-		if !ok {
-			return false, true
-		}
-		t = append(t, x)
-	}
-	p := listProfile(ctx, t)
-	if _, ok := s.profiles[p]; ok {
-		return true, false
-	}
-	s.profiles[p] = struct{}{}
-	s.tuples = append(s.tuples, t)
-	for _, sub := range s.subscribers {
-		sub(t)
-	}
-	return true, true
-}
+// func (ctx *EvalContext) clone() *EvalContext {
+// 	return &EvalContext{
+// 		Engine:  ctx.Engine,
+// 		DB:      ctx.DB,
+// 		Context: ctx.Context,
+// 		cut:     ctx.cut,
+// 		vars:    maps.Clone(ctx.vars),
+// 	}
+// }
 
 func listProfile(ctx *EvalContext, l []Value) string {
 	var sb strings.Builder
