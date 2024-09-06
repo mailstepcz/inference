@@ -2,7 +2,7 @@ package inference
 
 import "fmt"
 
-// BuiltinSendToChannel ...
+// BuiltinSendToChannel is an in-built predicate for sending data to channels.
 func BuiltinSendToChannel(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 2 {
@@ -21,7 +21,7 @@ func BuiltinSendToChannel(ctx *EvalContext, args []Value) func(func(*EvalContext
 	}
 }
 
-// BuiltinReceiveFromChannel ...
+// BuiltinReceiveFromChannel is an in-built predicate for receiving data from channels.
 func BuiltinReceiveFromChannel(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 2 {
@@ -42,7 +42,7 @@ func BuiltinReceiveFromChannel(ctx *EvalContext, args []Value) func(func(*EvalCo
 	}
 }
 
-// BuiltinReceiveAllFromChannel ...
+// BuiltinReceiveAllFromChannel is an in-built predicate for receiving data from channels in a cycle.
 func BuiltinReceiveAllFromChannel(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 2 {
@@ -66,7 +66,7 @@ func BuiltinReceiveAllFromChannel(ctx *EvalContext, args []Value) func(func(*Eva
 	}
 }
 
-// BuiltinCloseChannel ...
+// BuiltinCloseChannel is an in-built predicate for closing channels.
 func BuiltinCloseChannel(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -85,7 +85,7 @@ func BuiltinCloseChannel(ctx *EvalContext, args []Value) func(func(*EvalContext)
 	}
 }
 
-// BuiltinWriteln ...
+// BuiltinWriteln is an in-built predicate for writing to the standard output.
 func BuiltinWriteln(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -97,7 +97,7 @@ func BuiltinWriteln(ctx *EvalContext, args []Value) func(func(*EvalContext) bool
 	}
 }
 
-// BuiltinFail ...
+// BuiltinFail is an in-built predicate which always fails.
 func BuiltinFail(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 0 {
@@ -106,7 +106,7 @@ func BuiltinFail(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	}
 }
 
-// BuiltinTermAsList ...
+// BuiltinTermAsList is an in-built predicate for converting terms into lists and vice versa.
 func BuiltinTermAsList(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 2 {
@@ -137,7 +137,7 @@ func BuiltinTermAsList(ctx *EvalContext, args []Value) func(func(*EvalContext) b
 	}
 }
 
-// BuiltinIsPlus ...
+// BuiltinIsPlus is an in-built predicate for addition.
 func BuiltinIsPlus(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 3 {
@@ -167,7 +167,7 @@ func BuiltinIsPlus(ctx *EvalContext, args []Value) func(func(*EvalContext) bool)
 	}
 }
 
-// BuiltinIsString ...
+// BuiltinIsString is an in-built predicate for checking whether a value is a string.
 func BuiltinIsString(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -181,7 +181,7 @@ func BuiltinIsString(ctx *EvalContext, args []Value) func(func(*EvalContext) boo
 	}
 }
 
-// BuiltinFree ...
+// BuiltinFree is an in-built predicate for checking whether a value is a free variable.
 func BuiltinFree(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -193,7 +193,7 @@ func BuiltinFree(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	}
 }
 
-// BuiltinGround ...
+// BuiltinGround is an in-built predicate for checking whether a value is ground.
 func BuiltinGround(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -205,7 +205,7 @@ func BuiltinGround(ctx *EvalContext, args []Value) func(func(*EvalContext) bool)
 	}
 }
 
-// BuiltinCall ...
+// BuiltinCall is an in-built predicate for calling dynamically built predicates.
 func BuiltinCall(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -221,7 +221,7 @@ func BuiltinCall(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	}
 }
 
-// BuiltinNot ...
+// BuiltinNot is an in-built predicate for negation as failure.
 func BuiltinNot(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 1 {
@@ -237,7 +237,7 @@ func BuiltinNot(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	}
 }
 
-// BuiltinBagOf ...
+// BuiltinBagOf is an in-built predicate for collecting all the results of a goal.
 func BuiltinBagOf(ctx *EvalContext, args []Value) func(func(*EvalContext) bool) {
 	return func(yield func(*EvalContext) bool) {
 		if len(args) != 2 {
