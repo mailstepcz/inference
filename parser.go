@@ -355,7 +355,7 @@ type ASTAVM struct {
 
 func (a *ASTAVM) String() string { return fmt.Sprintf("%v", a.Map) }
 
-// AsTerm ...
+// AsTerm returns the AVM as a term.
 func (a *ASTAVM) AsTerm() *ASTTerm {
 	args := make([]ASTExpr, 0, len(a.Map))
 	for k, v := range a.Map {

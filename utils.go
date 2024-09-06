@@ -26,7 +26,7 @@ func termFromList(l []ASTExpr, tail ASTExpr) ASTExpr {
 	return &ASTTerm{Functor: ".", Args: []ASTExpr{l[0], termFromList(l[1:], tail)}}
 }
 
-// AVMFromMap ...
+// AVMFromMap converts a map into an AVM.
 func AVMFromMap(m map[string]Value) (Value, *Var) {
 	pairs := make([]Value, 0, len(m))
 	for k, v := range m {
@@ -36,7 +36,7 @@ func AVMFromMap(m map[string]Value) (Value, *Var) {
 	return listFromSlice(pairs, &tail), &tail
 }
 
-// MapFromAVM ...
+// MapFromAVM converts an AVM into a map.
 func MapFromAVM(avm Value) (map[string]Value, error) {
 	pairs, err := listFromTerm(avm)
 	if err != nil {
