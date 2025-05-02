@@ -7,7 +7,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/fealsamh/go-utils/dbutils"
+	"github.com/mailstepcz/go-utils/dbutils"
 	"github.com/mailstepcz/sexpr"
 	"gopkg.in/yaml.v3"
 )

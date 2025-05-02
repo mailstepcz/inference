@@ -1,16 +1,18 @@
 module github.com/mailstepcz/inference
 
-go 1.23.0
+go 1.24
+
+toolchain go1.24.2
 
 require (
-	github.com/fealsamh/go-utils v0.1.31
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
+	github.com/mailstepcz/go-utils v0.1.46
+	github.com/mailstepcz/lrparser v0.1.9-b
 	github.com/mailstepcz/sexpr v0.1.1
 	github.com/mailstepcz/slice v0.1.0
-	github.com/phomola/lrparser v0.1.8
-	github.com/phomola/textkit v0.1.5
-	github.com/stretchr/testify v1.9.0
+	github.com/mailstepcz/textkit v0.1.6-a
+	github.com/stretchr/testify v1.10.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 

@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/phomola/lrparser"
-	"github.com/phomola/textkit"
+	"github.com/mailstepcz/lrparser"
+	"github.com/mailstepcz/textkit"
 )
 
 var (

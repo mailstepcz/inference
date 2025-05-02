@@ -71,7 +71,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/fealsamh/go-utils/dbutils"
+	"github.com/mailstepcz/go-utils/dbutils"
 )
 
 // EvalContext is an evaluation context for a goal.
